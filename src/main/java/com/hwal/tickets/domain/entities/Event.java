@@ -1,9 +1,8 @@
-package com.hwal.tickets.domain;
+package com.hwal.tickets.domain.entities;
 
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -31,10 +30,10 @@ public class Event {
     private String name;
 
 
-    @Column(name = "start", nullable = false)
+    @Column(name = "event_start", nullable = false)
     private LocalDateTime start;
 
-    @Column(name = "end", nullable = false)
+    @Column(name = "event_end", nullable = false)
     private LocalDateTime end;
 
     @Column(name = "venue", nullable = false)

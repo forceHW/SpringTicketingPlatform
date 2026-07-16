@@ -1,8 +1,7 @@
-package com.hwal.tickets.domain;
+package com.hwal.tickets.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 

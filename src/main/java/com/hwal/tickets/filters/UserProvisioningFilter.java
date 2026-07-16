@@ -1,7 +1,7 @@
 package com.hwal.tickets.filters;
 
 
-import com.hwal.tickets.domain.User;
+import com.hwal.tickets.domain.entities.User;
 import com.hwal.tickets.repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
