@@ -9,9 +9,11 @@ import com.hwal.tickets.repositories.EventRepository;
 import com.hwal.tickets.repositories.UserRepository;
 import com.hwal.tickets.services.EventService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -57,6 +59,16 @@ public class EventServiceImpl implements EventService {
 
 
 
+    }
+
+    @Override
+    public Page<Event> listEventsForOrganizer(UUID organizerID, Pageable pageable) {
+        return eventRepository.findByOrganizerId(organizerID, pageable);
+    }
+
+    @Override
+    public Optional<Event> getEventForOrganizer(UUID organizerId, UUID id) {
+        return eventRepository.findByIdAndOrganizerId(id, organizerId);
     }
 
 }

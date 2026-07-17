@@ -3,11 +3,9 @@ package com.hwal.tickets.mappers;
 
 import com.hwal.tickets.domain.CreateEventRequest;
 import com.hwal.tickets.domain.CreateTicketTypeRequest;
-import com.hwal.tickets.domain.dtos.CreateEventRequestDto;
-import com.hwal.tickets.domain.dtos.CreateEventResponseDto;
-import com.hwal.tickets.domain.dtos.CreateTicketTypeRequestDto;
-import com.hwal.tickets.domain.dtos.CreateTicketTypeResponseDto;
+import com.hwal.tickets.domain.dtos.*;
 import com.hwal.tickets.domain.entities.Event;
+import com.hwal.tickets.domain.entities.TicketType;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -19,4 +17,12 @@ public interface EventMapper {
     CreateEventRequest fromDto(CreateEventRequestDto dto);
 
     CreateEventResponseDto toDto(Event event);
+
+    ListEventTicketTypeResponseDto toDto(TicketType ticketType);
+
+    ListEventResponseDto toListEventResponseDto(Event event);
+
+    GetEventDetailsTicketTypesResponseDto toGetEventDetailsTicketTypesResponseDto(TicketType ticketType);
+
+    GetEventDetailsResponseDto toGetEventDetailsResponseDto(Event event);
 }
