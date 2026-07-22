@@ -2,10 +2,8 @@ package com.hwal.tickets.controllers;
 
 
 import com.hwal.tickets.domain.CreateEventRequest;
-import com.hwal.tickets.domain.dtos.CreateEventRequestDto;
-import com.hwal.tickets.domain.dtos.CreateEventResponseDto;
-import com.hwal.tickets.domain.dtos.GetEventDetailsResponseDto;
-import com.hwal.tickets.domain.dtos.ListEventResponseDto;
+import com.hwal.tickets.domain.UpdateEventRequest;
+import com.hwal.tickets.domain.dtos.*;
 import com.hwal.tickets.domain.entities.Event;
 import com.hwal.tickets.mappers.EventMapper;
 import com.hwal.tickets.services.EventService;
@@ -45,6 +43,23 @@ public class EventController {
         return new ResponseEntity<>(createdEventResponseDto, HttpStatus.CREATED);
     }
 
+    @PutMapping(path = "/{eventId}")
+    public ResponseEntity<UpdateEventResponseDto> updateEvent(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID eventId,
+            @Valid @RequestBody UpdateEventRequestDto updateEventRequestDto){
+
+        UpdateEventRequest updateEventRequest = eventMapper.fromDto(updateEventRequestDto);
+
+        UUID userId = parseUserId(jwt);
+
+        Event updatedEvent = eventService.updateEventForOrganizer(userId, eventId, updateEventRequest);
+
+        UpdateEventResponseDto updatedEventResponseDto = eventMapper.toUpdateEventResponseDto(updatedEvent);
+
+        return ResponseEntity.ok(updatedEventResponseDto);
+    }
+
 
     @GetMapping
     public ResponseEntity<Page<ListEventResponseDto>> listEvents(
@@ -72,6 +87,9 @@ public class EventController {
                 .orElse(ResponseEntity.notFound().build());
 
     }
+
+
+
 
     private UUID parseUserId(Jwt jwt){
         return UUID.fromString(jwt.getSubject());

@@ -3,6 +3,8 @@ package com.hwal.tickets.mappers;
 
 import com.hwal.tickets.domain.CreateEventRequest;
 import com.hwal.tickets.domain.CreateTicketTypeRequest;
+import com.hwal.tickets.domain.UpdateEventRequest;
+import com.hwal.tickets.domain.UpdateTicketTypeRequest;
 import com.hwal.tickets.domain.dtos.*;
 import com.hwal.tickets.domain.entities.Event;
 import com.hwal.tickets.domain.entities.TicketType;
@@ -25,4 +27,13 @@ public interface EventMapper {
     GetEventDetailsTicketTypesResponseDto toGetEventDetailsTicketTypesResponseDto(TicketType ticketType);
 
     GetEventDetailsResponseDto toGetEventDetailsResponseDto(Event event);
+
+    UpdateTicketTypeRequest fromDto(UpdateTicketTypeRequestDto dto);
+
+    UpdateEventRequest fromDto(UpdateEventRequestDto dto);
+
+    UpdateTicketTypeResponseDto toUpdateTicketTypeResponseDto(TicketType ticketType);
+
+    UpdateEventResponseDto toUpdateEventResponseDto(Event event);
+
 }
