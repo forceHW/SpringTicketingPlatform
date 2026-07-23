@@ -6,6 +6,7 @@ import com.hwal.tickets.domain.UpdateTicketTypeRequest;
 import com.hwal.tickets.domain.entities.Event;
 import com.hwal.tickets.domain.entities.TicketType;
 import com.hwal.tickets.domain.entities.User;
+import com.hwal.tickets.domain.entities.eventStatusEnum;
 import com.hwal.tickets.exceptions.EventNotFoundException;
 import com.hwal.tickets.exceptions.EventUpdateException;
 import com.hwal.tickets.exceptions.TicketTypeNotFoundException;
@@ -146,6 +147,11 @@ public class EventServiceImpl implements EventService {
     @Transactional
     public void deleteEventForOrganizer(UUID organizerId, UUID id) {
         getEventForOrganizer(organizerId, id).ifPresent(eventRepository::delete);
+    }
+
+    @Override
+    public Page<Event> listPublishedEvents(Pageable pageable) {
+        return eventRepository.findByStatus(eventStatusEnum.PUBLISHED, pageable);
     }
 
 }
