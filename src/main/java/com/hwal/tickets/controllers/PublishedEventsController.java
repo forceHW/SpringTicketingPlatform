@@ -14,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
@@ -28,16 +29,21 @@ public class PublishedEventsController {
 
     @GetMapping
     public ResponseEntity<Page<ListPublishedEventsResponseDto>> listEvents(
+            @RequestParam(required = false) String q,
             Pageable pageable) {
 
-        Page<Event> events = eventService.listPublishedEvents(pageable);
+
+
+        Page<Event> events;
+        if(null != q && !q.trim().isEmpty()) {
+            events = eventService.searchPublishedEvents(q, pageable);
+        }
+        else {
+            events = eventService.listPublishedEvents(pageable);
+        }
 
         return ResponseEntity.ok(events.map(eventMapper::toListPublishedEventsResponseDto));
-
-
     }
 
-    private UUID parseUserId(Jwt jwt){
-        return UUID.fromString(jwt.getSubject());
-    }
+
 }
