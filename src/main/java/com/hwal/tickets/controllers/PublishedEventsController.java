@@ -1,6 +1,7 @@
 package com.hwal.tickets.controllers;
 
 
+import com.hwal.tickets.domain.dtos.GetPublishedEventDetailsResponseDto;
 import com.hwal.tickets.domain.dtos.ListEventResponseDto;
 import com.hwal.tickets.domain.dtos.ListPublishedEventsResponseDto;
 import com.hwal.tickets.domain.entities.Event;
@@ -12,10 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -33,7 +31,6 @@ public class PublishedEventsController {
             Pageable pageable) {
 
 
-
         Page<Event> events;
         if(null != q && !q.trim().isEmpty()) {
             events = eventService.searchPublishedEvents(q, pageable);
@@ -45,5 +42,13 @@ public class PublishedEventsController {
         return ResponseEntity.ok(events.map(eventMapper::toListPublishedEventsResponseDto));
     }
 
+
+    @GetMapping(path = "/{eventId}")
+    public ResponseEntity<GetPublishedEventDetailsResponseDto> getPublishedEvent(@PathVariable UUID eventId){
+        return eventService.getPublishedEventForAttendee(eventId)
+                .map(eventMapper::toGetPublishedEventDetailsResponseDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
 }
